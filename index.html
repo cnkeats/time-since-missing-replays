@@ -1,1 +1,102 @@
-Hello World!
+
+
+<div>
+    <div>
+        <label>It has been</label>
+    </div>
+    <div>
+        <lablel id="days"></lablel>
+        <lablel>Days,</lablel>
+        <lablel id="hours"></lablel>
+        <lablel>Hours,</lablel>
+        <lablel id="minutes"></lablel>
+        <lablel>Minutes,</lablel>
+        <lablel id="seconds"></lablel>
+        <lablel>Seconds, and</lablel>
+        <lablel id="milliseconds"></lablel>
+        <lablel>Milliseconds</lablel>
+    </div>
+    <div>
+        since a user has had their June 29th and onward replays go "missing".
+    </div>
+    <hr>
+    <div>
+        <label>Top 5 Records:</label>
+        <div id="recordList">
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // This is a stupid hack to keep track of past times someone has lost their replays
+    // I can't be bothered to do anyhing better
+    var listOfPreviousDates = [
+        new Date("July 19, 2020 16:39:00"),
+        new Date("July 18, 2020 17:59:00"),
+        new Date("July 18, 2020 15:07:00"),
+        new Date("July 18, 2020 14:04:00"),
+        new Date("July 18, 2020 06:00:00")
+    ];
+    listOfPreviousDates.sort((a,b) => a.getTime() - b.getTime()).reverse();
+
+    var dateCountingFrom = listOfPreviousDates[0];
+
+    const updateTimer = setInterval(function() {
+        var difference = new Date().getTime() - dateCountingFrom;
+
+        const days = Math.floor(difference / (1000 * 60 * 60 *24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        let milliseconds = difference % 1000;
+        let paddedms = milliseconds;
+        if (milliseconds < 100) {
+            paddedms = '0' + milliseconds;
+            if (milliseconds < 10) {
+                paddedms = '0' + paddedms;
+            }
+        }
+        
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+        document.getElementById("milliseconds").innerHTML = paddedms;
+    });
+
+    function addListItem(differenceInMs) {
+
+        var difference = differenceInMs;
+
+        const days = Math.floor(difference / (1000 * 60 * 60 *24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        let milliseconds = difference % 1000;
+        let paddedms = milliseconds;
+        if (milliseconds < 100) {
+            paddedms = '0' + milliseconds;
+            if (milliseconds < 10) {
+                paddedms = '0' + paddedms;
+            }
+        }
+
+        var newItem = document.createElement("li");
+        newItem.innerHTML = days + ' days ' + hours + ' hours ' + minutes + ' minutes';
+
+        document.getElementById("recordList").appendChild(newItem);
+    }
+
+    var listOfDifferences = [];
+    for (let i = 0; i < listOfPreviousDates.length-1; i++) {
+        listOfDifferences[i] = listOfPreviousDates[i] - listOfPreviousDates[i+1];
+    }
+    listOfDifferences.sort((a,b) => a-b).reverse();
+
+    for (let i = 0; i < listOfDifferences.length & i < 5; i++) {
+        addListItem(listOfDifferences[i]);
+    }
+
+</script>

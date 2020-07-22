@@ -1,10 +1,10 @@
 
 
-<div>
+<div style="text-align: center; font-size: 30px; margin-top: 200px;">
     <div>
         <label>It has been</label>
     </div>
-    <div>
+    <div style="font-size: 50px;">
         <lablel id="days"></lablel>
         <lablel>Days,</lablel>
         <lablel id="hours"></lablel>
@@ -22,8 +22,7 @@
     <hr>
     <div>
         <label>Top 5 Times:</label>
-        <div id="recordList">
-
+        <div id="recordList" style="list-style: none;">
         </div>
     </div>
     <hr>
@@ -55,7 +54,9 @@
         new Date("July 21, 2020 20:20:00"),
         new Date("July 21, 2020 20:28:00"),
         new Date("July 21, 2020 22:40:00"),
-        new Date("July 22, 2020 00:35:00")
+        new Date("July 22, 2020 00:35:00"),
+        new Date("July 22, 2020 12:39:00"),
+        new Date("July 22, 2020 13:49:00")
     ];
     listOfPreviousDates.sort((a,b) => a.getTime() - b.getTime()).reverse();
 
